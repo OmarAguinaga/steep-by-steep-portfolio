@@ -1,0 +1,30 @@
+.banner {
+  /* Flexbox */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 450px;
+  background: url('/img/hero.jpg') no-repeat right -200px fixed;
+  background-size: cover;
+}
+
+.u-wu {
+  color: white;
+  text-transform: uppercase;
+}
+
+.name {
+  font-weight: 400;
+  background: rgba(255, 32, 175, 0.6);
+  padding: 0.4em;
+}
+
+.name:after {
+  content: 'UX Designer';
+  font-size: 18px;
+  position: absolute;
+  background: rgba(238, 180, 68, 0.7);
+  font-weight: 200;
+  padding: 0.3em;
+}
