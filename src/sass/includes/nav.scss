@@ -2,23 +2,29 @@
   background: #301a55;
   box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.25);
 }
+
 .nav__container {
-  height: 70px;
+  /* Flexbox */
   display: flex;
   justify-content: flex-end;
   align-items: center;
   flex: 1;
+
+  /* General style */
+  height: 70px;
 }
 
 .nav__link {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  height: 100%;
-
+  /* Flexbox */
   display: flex;
   align-items: center;
+
+  /* General style */
+  height: 100%;
   padding: 0 1em;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .nav__link:hover {
