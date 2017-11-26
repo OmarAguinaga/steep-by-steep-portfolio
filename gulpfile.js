@@ -7,7 +7,9 @@ var gulp = require('gulp'),
   pug = require('gulp-pug'),
   prefix = require('gulp-autoprefixer'),
   sass = require('gulp-sass'),
-  browserSync = require('browser-sync');
+  browserSync = require('browser-sync'),
+  svgstore = require('gulp-svgstore'),
+  svgmin = require('gulp-svgmin');
 
 /*
  * Directories here
@@ -16,7 +18,8 @@ var paths = {
   public: './public/',
   sass: './src/sass/',
   css: './public/css/',
-  data: './src/_data/'
+  data: './src/_data/',
+  svg: './src/svg/'
 };
 
 /**
@@ -75,6 +78,25 @@ gulp.task('sass', function () {
     }));
 });
 
+
+gulp.task('svgstore', function () {
+  return gulp
+      .src(paths.svg+'*.svg')
+      .pipe(svgmin(function (file) {
+          var prefix = path.basename(file.relative, path.extname(file.relative));
+          return {
+              plugins: [{
+                  cleanupIDs: {
+                      prefix: prefix + '-',
+                      minify: true
+                  }
+              }]
+          }
+      }))
+      .pipe(svgstore())
+      .pipe(gulp.dest('./src/_partials'));
+});
+
 /**
  * Watch scss files for changes & recompile
  * Watch .pug files run pug-rebuild then reload BrowserSync
@@ -82,10 +104,11 @@ gulp.task('sass', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.sass + '**/*.scss', ['sass']);
   gulp.watch('./src/**/*.pug', ['rebuild']);
+  gulp.watch(paths.svg + '**/*.svg', ['svgstore']);
 });
 
 // Build task compile sass and pug.
-gulp.task('build', ['sass', 'pug']);
+gulp.task('build', ['sass', 'pug', 'svgstore']);
 
 /**
  * Default task, running just `gulp` will compile the sass,
