@@ -79,23 +79,6 @@ gulp.task('sass', function () {
 });
 
 
-gulp.task('svgstore', function () {
-  return gulp
-      .src(paths.svg+'*.svg')
-      .pipe(svgmin(function (file) {
-          var prefix = path.basename(file.relative, path.extname(file.relative));
-          return {
-              plugins: [{
-                  cleanupIDs: {
-                      prefix: prefix + '-',
-                      minify: true
-                  }
-              }]
-          }
-      }))
-      .pipe(svgstore())
-      .pipe(gulp.dest('./src/_partials'));
-});
 
 /**
  * Watch scss files for changes & recompile
@@ -104,11 +87,10 @@ gulp.task('svgstore', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.sass + '**/*.scss', ['sass']);
   gulp.watch('./src/**/*.pug', ['rebuild']);
-  gulp.watch(paths.svg + '**/*.svg', ['svgstore']);
 });
 
 // Build task compile sass and pug.
-gulp.task('build', ['sass', 'pug', 'svgstore']);
+gulp.task('build', ['sass', 'pug']);
 
 /**
  * Default task, running just `gulp` will compile the sass,
